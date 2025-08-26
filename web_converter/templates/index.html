@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DXF Curve Converter by Aji-SWG_Dev</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background-color: #f4f4f9; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; }
+        .container { background-color: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 600px; width: 100%; margin-top: 20px; }
+        h1 { text-align: center; color: #333; }
+        .description { background-color: #e9f7ff; border-left: 4px solid #007bff; padding: 15px; margin-top: 20px; margin-bottom: 20px; font-size: 15px; line-height: 1.6; color: #333; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; color: #555; }
+        input[type="file"], input[type="number"] { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        .btn { background-color: #007bff; color: white; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer; width: 100%; font-size: 16px; font-weight: 600; transition: background-color 0.3s; }
+        .btn:hover { background-color: #0056b3; }
+        .flash-messages { list-style: none; padding: 0; margin-bottom: 20px; }
+        .flash-messages li { padding: 15px; border-radius: 4px; text-align: center; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .results { margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; }
+        h2 { color: #333; }
+        .logs { background-color: #f8f9fa; border: 1px solid #e9ecef; border-radius: 4px; padding: 15px; max-height: 300px; overflow-y: auto; font-family: monospace; font-size: 14px; white-space: pre-wrap; }
+        .download-btn { display: inline-block; background-color: #28a745; color: white; padding: 12px 25px; text-decoration: none; border-radius: 4px; font-weight: 600; text-align: center; margin-top: 20px; transition: background-color 0.3s; }
+        .download-btn:hover { background-color: #218838; }
+        .footer-note { text-align: center; margin-top: 30px; color: #888; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>DXF Curve Converter by Aji-SWG_Dev</h1>
+        
+        <div class="description">
+            Hi all,<br>
+            This page provides a simple tool to convert spline entities into polylines in DXF files.<br>
+            ✅ Minimum supported version: AutoCAD 2004 / LT 2004 (.dxf)<br>
+            🔧 Tolerance range: 0.001 – 10 (recommended: 0.01)<br>
+            By converting splines to polylines, your DXF calculation process becomes smoother and more efficient—especially for downstream workflows like CAM, simulation, or data extraction.<br><br>
+            Need help or want to integrate this into your workflow? Feel free to reach out.<br>
+            <a href="mailto:aji.sugiyantoro@swgemilang.com">aji.sugiyantoro@swgemilang.com</a> or <a href="https://www.linkedin.com/in/aji-sugiyantoro-designerengineer471/" target="_blank">LinkedIn</a>
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flash-messages">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        <form method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="file">1. Select DXF File</label>
+                <input type="file" name="file" id="file" accept=".dxf" required>
+            </div>
+            <div class="form-group">
+                <label for="tolerance">2. Set Spline Tolerance</label>
+                <input type="number" name="tolerance" id="tolerance" value="0.01" step="0.001" min="0.001" required>
+            </div>
+            <button type="submit" class="btn">Start Conversion</button>
+        </form>
+
+        {% if conversion_done %}
+        <div class="results">
+            <h2>Conversion Results</h2>
+            <div class="logs">
+                {% for log in logs %}
+                    {{ log }}
+                {% endfor %}
+            </div>
+            {% if download_url %}
+                <a href="{{ download_url }}" class="download-btn">Download Converted File</a>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <div class="footer-note">
+            Total files converted so far: {{ conversion_count }}
+        </div>
+    </div>
+</body>
+</html>
