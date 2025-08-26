@@ -1,8 +1,0 @@
-Hi all,
-This page provides a simple tool to convert spline entities into polylines in DXF files.
-✅ Minimum supported version: AutoCAD 2004 / LT 2004 (.dxf)
-🔧 Tolerance range: 0.001 – 10 (recommended: 0.01)
-By converting splines to polylines, your DXF calculation process becomes smoother and more efficient—especially for downstream workflows like CAM, simulation, or data extraction.
-
-Need help or want to integrate this into your workflow? Feel free to reach out.
-aji.sugiyantoro@swgemilang.com or https://www.linkedin.com/in/aji-sugiyantoro-designerengineer471/
